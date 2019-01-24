@@ -1,0 +1,120 @@
+<div *ngIf="parsedSite != undefined">
+  <div class="response-layout">
+    <div class="response-layout_status">
+      <div class="status_title">
+        Server Response
+      </div>
+      <div class="status_code" [style.background]="getStatusColor()" >
+        {{parsedSite.serverResponse.code}}
+      </div>
+      <div class="status_description" [style.background]="getStatusColor()">
+        {{parsedSite.serverResponse.description}}
+      </div>
+    </div>
+    <div class="response-layout_time">
+      <div class="time_title">
+        TTFB
+      </div>
+      <div class="time_value">
+        {{parsedSite.responseTime}} ms
+      </div>
+    </div>
+  </div>
+  <div class="title-description">
+    <div *ngIf="parsedSite.title" class="site-title">
+      <h3>Title</h3>
+    </div>
+    <div *ngIf="parsedSite.title" class="site-title_value">
+        <h3>{{parsedSite.title}}</h3>
+    </div>
+    <div *ngIf="parsedSite.description" class="site-description">
+      <h3>Description</h3>
+    </div>
+    <div *ngIf="parsedSite.description" class="site-description_value">
+        {{parsedSite.description}}
+    </div>
+  </div>
+  <mat-accordion>
+    <mat-expansion-panel *ngIf="parsedSite.headersH1.length != 0">
+      <mat-expansion-panel-header>
+        <mat-panel-title class="expanstion-header">
+          <span [matBadge]="parsedSite.headersH1.length" matBadgeOverlap="false" matBadgePosition="above after">
+              Headers(H1)
+          </span>
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <mat-list>
+          <mat-list-item *ngFor="let header of parsedSite.headersH1"> {{header}} </mat-list-item>
+          <mat-divider></mat-divider>
+      </mat-list>
+    </mat-expansion-panel>
+    <mat-divider></mat-divider>
+    <mat-expansion-panel *ngIf="parsedSite.images.length != 0" >
+        <mat-expansion-panel-header>
+          <mat-panel-title class="expanstion-header">
+            <span [matBadge]="parsedSite.images.length" matBadgeOverlap="false" matBadgePosition="above after">
+                Images
+            </span>
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="mat-elevation-z8">
+        <table mat-table [dataSource]="parsedSite.images">
+
+            <!--- Note that these columns can be defined in any order.
+                  The actual rendered columns are set as a property on the row definition" -->
+          
+            <!-- Position Column -->
+          
+            <!-- Name Column -->
+            <ng-container matColumnDef="src">
+              <th mat-header-cell *matHeaderCellDef> Src </th>
+              <td mat-cell *matCellDef="let element"> {{element.src}} </td>
+            </ng-container>
+          
+            <!-- Weight Column -->
+            <ng-container matColumnDef="alt">
+              <th mat-header-cell *matHeaderCellDef> Alt </th>
+              <td mat-cell *matCellDef="let element"> {{element.alt}} </td>
+            </ng-container>
+          
+            <!-- Symbol Column -->
+            <ng-container matColumnDef="image">
+              <th mat-header-cell *matHeaderCellDef> Image </th>
+              <td mat-cell *matCellDef="let element"> <img [src]="element.src" alt="" width="150" height="150"> </td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="['src', 'alt','image']"></tr>
+            <tr mat-row *matRowDef="let row; columns: ['src', 'alt','image'];"></tr>
+          </table>
+        </div>
+      </mat-expansion-panel>
+      <mat-divider></mat-divider>
+      <mat-expansion-panel *ngIf="parsedSite.links.length != 0">
+          <mat-expansion-panel-header>
+            <mat-panel-title class="expanstion-header">
+              <span [matBadge]="parsedSite.links.length" matBadgeOverlap="false" matBadgePosition="above after">
+                  Links
+              </span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+          <div class="mat-elevation-z8">
+              <table mat-table [dataSource]="parsedSite.links">
+      
+                  <ng-container matColumnDef="href">
+                    <th mat-header-cell *matHeaderCellDef> href </th>
+                    <td mat-cell *matCellDef="let element"> <a [href]="element.href" target="_blank">{{element.href}}</a> </td>
+                  </ng-container>
+                
+                  <ng-container matColumnDef="type">
+                    <th mat-header-cell *matHeaderCellDef> Type </th>
+                    <td mat-cell *matCellDef="let element"> {{element.linkType}} </td>
+                  </ng-container>
+                
+                
+                  <tr mat-header-row *matHeaderRowDef="['href', 'type']"></tr>
+                  <tr mat-row *matRowDef="let row; columns: ['href', 'type'];"></tr>
+                </table>
+              </div>
+        </mat-expansion-panel>
+  </mat-accordion>
+</div>

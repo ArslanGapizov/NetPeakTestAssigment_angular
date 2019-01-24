@@ -1,1 +1,19 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
+* {
+    box-sizing: border-box;
+}
+
+file-drop .drop-zone[_ngcontent-c9] {
+    margin: auto;
+    height: 50px;;
+    border: none;
+    border-radius: 0px;
+  }
+  .drop-zone[_ngcontent-c9] .content {
+    color: none;
+    height: 50px;;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }

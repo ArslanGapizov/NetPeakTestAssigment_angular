@@ -1,0 +1,22 @@
+
+
+<form class="url-form" [formGroup]="urlForm" (ngSubmit)="onSubmit()">
+  <mat-form-field class="full-width">
+    <input matInput formControlName="urlInput" placeholder="Url" value="">
+    <button mat-flat-button matSuffix mat-stroked-button class="submit-btn" color="primary" [disabled]="!urlForm.valid || isLoading"><mat-icon>send</mat-icon></button>
+  </mat-form-field>
+  <div class="exception-text">
+    <span>{{exception}}</span>
+  </div>
+</form>
+
+<mat-spinner class="loading-spinner" *ngIf="isLoading"></mat-spinner>
+<app-info *ngIf="!isLoading" [parsedSite]="parsedSite"></app-info>
+<app-history [sitesHistory]="sitesHistory"
+            (reloadByUriEvent)="reloadFromUri($event)"
+            (getResultEvent)="getResultFromHistory($event)"
+            (deleteEvent)="deleteFromHistory($event)"></app-history>
+
+<file-drop headertext="Drop here for import" (onFileDrop)="dropped($event)" 
+            (onFileOver)="fileOver($event)" (onFileLeave)="fileLeave($event)">
+</file-drop>
